@@ -1,0 +1,97 @@
+service:
+  name: serverless-plugin-lex-bot-test
+  profile: production
+  region: us-east-1
+
+plugins:
+  - serverless-plugin-lex-bot
+
+provider:
+  name: aws
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - lex:PostText
+      Resource:
+        - 'Fn::Join':
+          - ':'
+          -
+            - 'arn:aws:lex'
+            - Ref: 'AWS::Region'
+            - Ref: 'AWS::AccountId'
+            - 'bot:test:latest'
+  runtime: nodejs8.10
+  logRetentionInDays: 14
+
+Resources:
+
+functions:
+  dummy: 
+    package:
+      exclude:
+        - node_modules/**
+    handler: handler.handler
+    events:
+      - http:
+          path: /
+          method: POST
+          cors: false
+    environment:
+      DUMMY: true
+
+custom:
+  lex:
+    - name: test
+      alexaImportSkillId: testSkillId
+  alexa:
+    skills:
+      - id: testSkillId
+        models:
+          en-US:
+            interactionModel:
+              languageModel:
+                types:
+                  - name: IndexSelections
+                    values:
+                    - id: one
+                      name:
+                        value: one
+                        synonyms:
+                        - one
+                        - first
+                    - id: two
+                      name:
+                        value: two
+                        synonyms:
+                        - two
+                        - second
+                    - id: three
+                      name:
+                        value: three
+                        synonyms:
+                        - three
+                        - third
+                intents:
+                  - name: AMAZON.RepeatIntent
+                    samples:
+                    - Repeat
+                    - Repeat it
+                    - Repeat it please
+                  - name: GreetingIntent
+                    slots: []
+                    samples:
+                    - hi
+                    - hello
+                    - good morning
+                    - good morning
+                    - good evening
+                    - ciao
+                    - good afternoon
+                  - name: ChooseByIndexIntent
+                    slots:
+                    - name: IndexSelection
+                      type: IndexSelections
+                    samples:
+                    - select {IndexSelection}
+                    - choose {IndexSelection}
+                    - "{IndexSelection}"

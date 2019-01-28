@@ -1,0 +1,13 @@
+{
+  "name": "sls-test",
+  "version": "1.0.0",
+  "description": "sls test",
+  "main": "handler.js",
+  "scripts": {},
+  "author": "Pavel Savara",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "serverless-plugin-lex-bot": "file:../src"
+  }
+}

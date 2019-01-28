@@ -1,0 +1,102 @@
+{
+    "metadata": {
+        "schemaVersion": "1.0",
+        "importType": "LEX",
+        "importFormat": "JSON"
+    },
+    "resource": {
+        "name": "test_en_US",
+        "version": 4,
+        "intents": [
+            {
+                "name": "GreetingIntent",
+                "version": 4,
+                "fulfillmentActivity": {
+                    "type": "ReturnIntent"
+                },
+                "sampleUtterances": [
+                    "hi",
+                    "hello",
+                    "good morning",
+                    "good evening",
+                    "good afternoon"
+                ],
+                "slots": []
+            },
+            {
+                "name": "ChooseByIndexIntent",
+                "version": 4,
+                "fulfillmentActivity": {
+                    "type": "ReturnIntent"
+                },
+                "sampleUtterances": [
+                    "select {IndexSelection}",
+                    "choose {IndexSelection}",
+                    "{IndexSelection}"
+                ],
+                "slots": [
+                    {
+                        "name": "IndexSelection",
+                        "slotTypeVersion": 4,
+                        "slotType": "IndexSelections",
+                        "slotConstraint": "Required",
+                        "priority": 1,
+                        "valueElicitationPrompt": {
+                            "messages": [
+                                {
+                                    "contentType": "PlainText",
+                                    "content": "n/a"
+                                }
+                            ],
+                            "maxAttempts": 1
+                        }
+                    }
+                ]
+            }
+        ],
+        "slotTypes": [
+            {
+                "name": "IndexSelections",
+                "version": 4,
+                "enumerationValues": [
+                    {
+                        "value": "one",
+                        "synonyms": [
+                            "one",
+                            "first"
+                        ]
+                    },
+                    {
+                        "value": "two",
+                        "synonyms": [
+                            "two",
+                            "second"
+                        ]
+                    }
+                ],
+                "valueSelectionStrategy": "TOP_RESOLUTION"
+            }
+        ],
+        "childDirected": false,
+        "voiceId": "0",
+        "idleSessionTTLInSeconds": 300,
+        "locale": "en-US",
+        "clarificationPrompt": {
+            "messages": [
+                {
+                    "contentType": "PlainText",
+                    "content": "n/a"
+                }
+            ],
+            "maxAttempts": 5
+        },
+        "abortStatement": {
+            "messages": [
+                {
+                    "contentType": "PlainText",
+                    "content": "n/a"
+                }
+            ]
+        }
+    }
+}
