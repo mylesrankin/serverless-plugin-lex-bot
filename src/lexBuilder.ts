@@ -82,7 +82,7 @@ export class LexBuilder {
             const accountId = await this.provider.getAccountId();
             for (var locale in skill.models) {
                 const lang = skill.models[locale];
-                const longName = botName + '_' + locale.replace('-', '_');
+                const longName = botName + '_' + locale.replace('-', '_').toLowerCase();
                 const langModel = lang.interactionModel.languageModel;
                 const lexBot = this.convertLangToLex(this.deduplicate(langModel), locale, longName, version);
                 //console.log(JSON.stringify(lexBot, null, 2));
@@ -102,7 +102,7 @@ export class LexBuilder {
                 if (!resp.importId) {
                     throw new Error(JSON.stringify(resp, null, 2))
                 }
-                //console.log("Lex-InProgress");
+                //console.log("Lex-InProgress:"+JSON.stringify(resp, null, 2));
                 while (status == 'IN_PROGRESS') {
                     try {
                         await new Promise(resolve => setTimeout(resolve, 500));
@@ -110,16 +110,18 @@ export class LexBuilder {
                         importDone = await this.builder.getImport({
                             importId: resp.importId,
                         }).promise();
+                        //console.log("Lex-InProgress:"+JSON.stringify(importDone, null, 2));
                         status = importDone.importStatus;
                     }
                     catch (err) {
                         if (err.code != "LimitExceededException") {
                             throw err;
                         }
+                        status = 'IN_PROGRESS'
                     }
                 }
                 if (importDone.importStatus !== 'COMPLETE') {
-                    throw new Error(JSON.stringify(resp, null, 2))
+                    throw new Error(JSON.stringify(importDone, null, 2))
                 }
                 //console.log("Lex-GetBot");
                 var bot = await this.builder.getBot({
@@ -160,6 +162,7 @@ export class LexBuilder {
                         if (err.code != "LimitExceededException") {
                             throw err;
                         }
+                        status = 'BUILDING'
                     }
 
                 }
@@ -237,8 +240,8 @@ export class LexBuilder {
 
     convertIntentToLex(alexaIntent: SlsAlexaIntent, longName: string, version: number) {
         if (alexaIntent.name.indexOf('AMAZON') != -1
-        && alexaIntent.name.indexOf('AMAZON.YesIntent') == -1
-        && alexaIntent.name.indexOf('AMAZON.NoIntent') == -1
+            && alexaIntent.name.indexOf('AMAZON.YesIntent') == -1
+            && alexaIntent.name.indexOf('AMAZON.NoIntent') == -1
         ) {
             return {
                 "name": longName + '_' + alexaIntent.name.replace('.', "_"),
