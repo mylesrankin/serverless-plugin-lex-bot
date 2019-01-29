@@ -2,7 +2,7 @@
 [serverless](https://github.com/serverless/serverless) plugin for [AWS Lex](https://aws.amazon.com/lex/)
 
 This plugin will deploy NLP model to AWS Lex.
-The current implementation is able to deploy [AWS Alexa plugin](https://github.com/marcy-terui/serverless-alexa-skills)'s NLP model from 
+The current implementation is able to deploy NLP model from [Alexa](https://github.com/marcy-terui/serverless-alexa-skills)'s  
 yaml in `custom\alexa\skills\models\locale\interactionModel\languageModel` see [serverless.yml](./test/serverless.yml) sample.
 It would conver the Alexa syntaxt into Lex syntax, create import zip file and upload the bot. 
 It would also build the bot and label it with `latest` version alias.
