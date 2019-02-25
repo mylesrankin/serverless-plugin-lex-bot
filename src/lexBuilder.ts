@@ -238,21 +238,18 @@ export class LexBuilder {
         };
     }
 
-    convertIntentToLex(alexaIntent: SlsAlexaIntent, longName: string, version: number) {
-        if (alexaIntent.name.indexOf('AMAZON') != -1
-            && alexaIntent.name.indexOf('AMAZON.YesIntent') == -1
-            && alexaIntent.name.indexOf('AMAZON.NoIntent') == -1
-        ) {
-            return {
-                "name": longName + '_' + alexaIntent.name.replace('.', "_"),
-                "version": version,
-                "fulfillmentActivity": {
-                    "type": "ReturnIntent"
-                },
-                "parentIntentSignature": alexaIntent.name
-            }
+    convertIntentToLexBuiltin(alexaIntent: SlsAlexaIntent, longName: string, version: number) {
+        return {
+            "name": longName + '_' + alexaIntent.name.replace('AMAZON.', "BMAZON_"),
+            "version": version,
+            "fulfillmentActivity": {
+                "type": "ReturnIntent"
+            },
+            "parentIntentSignature": alexaIntent.name
         }
+}
 
+    convertIntentToLex(alexaIntent: SlsAlexaIntent, longName: string, version: number) {
         return {
             "name": longName + '_' + alexaIntent.name.replace('.', "_"),
             "version": version,
@@ -270,6 +267,27 @@ export class LexBuilder {
     }
 
     convertLangToLex(alexaModel: SlsAlexaModel, locale: string, longName: string, version: number): any {
+        const filtered = alexaModel.intents
+            .filter(i => i.name != "AMAZON.FallbackIntent"
+                && i.name != "AMAZON.ScrollUpIntent"
+                && i.name != "AMAZON.ScrollLeftIntent"
+                && i.name != "AMAZON.ScrollDownIntent"
+                && i.name != "AMAZON.ScrollRightIntent"
+                && i.name != "AMAZON.PageDownIntent"
+                && i.name != "AMAZON.PageUpIntent"
+                && i.name != "AMAZON.MoreIntent"
+                && i.name != "AMAZON.NavigateHomeIntent"
+                && i.name != "AMAZON.NavigateSettingsIntent"
+            );
+
+        const intents = filtered
+            .map(i => this.convertIntentToLex(i, longName, version));
+        const intentsBuiltIn = filtered
+            .filter(i => i.name.indexOf("AMAZON.") == 0
+                && i.name != "AMAZON.YesIntent"
+                && i.name != "AMAZON.NoIntent")
+            .map(i => this.convertIntentToLexBuiltin(i, longName, version));
+
         return {
             "metadata": {
                 "schemaVersion": "1.0",
@@ -279,19 +297,7 @@ export class LexBuilder {
             "resource": {
                 "name": longName,
                 "version": version,
-                "intents": alexaModel.intents
-                    .filter(i => i.name != "AMAZON.FallbackIntent"
-                        && i.name != "AMAZON.ScrollUpIntent"
-                        && i.name != "AMAZON.ScrollLeftIntent"
-                        && i.name != "AMAZON.ScrollDownIntent"
-                        && i.name != "AMAZON.ScrollRightIntent"
-                        && i.name != "AMAZON.PageDownIntent"
-                        && i.name != "AMAZON.PageUpIntent"
-                        && i.name != "AMAZON.MoreIntent"
-                        && i.name != "AMAZON.NavigateHomeIntent"
-                        && i.name != "AMAZON.NavigateSettingsIntent"
-                    )
-                    .map(i => this.convertIntentToLex(i, longName, version)),
+                "intents": [...intents, ...intentsBuiltIn],
                 "slotTypes": alexaModel.types.map(t => this.convertTypeToLex(t, longName, version)),
                 "childDirected": false,
                 "voiceId": "0",
