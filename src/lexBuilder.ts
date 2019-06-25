@@ -82,7 +82,7 @@ export class LexBuilder {
     const arns: string[] = [];
     const skill = alexaModel.skills.find((s) => s.id == skillID);
     if (!skill) {
-      throw new Error(skillID + " aleda skill id not found");
+      throw new Error(skillID + " Alexa skill id not found");
     }
 
     const version = 0;
