@@ -120,7 +120,7 @@ export class LexBuilder {
         //console.log("Lex-InProgress:"+JSON.stringify(resp, null, 2));
         while (status == "IN_PROGRESS") {
           try {
-            await new Promise((resolve) => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 1500));
 
             importDone = await this.builder
               .getImport({
@@ -171,7 +171,7 @@ export class LexBuilder {
         //console.log("Lex-Building");
         while (status == "BUILDING") {
           try {
-            await new Promise((resolve) => setTimeout(resolve, 2000));
+            await new Promise((resolve) => setTimeout(resolve, 6000));
             bot = await this.builder
               .getBot({
                 name: longName,
