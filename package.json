@@ -3,7 +3,7 @@
   "version": "1.0.2",
   "description": "serverless plugin for deploying amazon lex bots",
   "main": "src/index.js",
-  "types": "src/dist/index.d.ts",
+  "types": "src/index.d.ts",
   "scripts": {
     "build": "tsc ./src/index.ts",
     "test": "mocha --require ts-node/register --timeout 999999 --colors **/*.spec.ts --watch-extensions ts",
