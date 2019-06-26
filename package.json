@@ -1,11 +1,11 @@
 {
-  "name": "serverless-plugin-lex-bot",
-  "version": "1.0.0",
-  "description": "",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "name": "@deputi/serverless-plugin-lex-bot",
+  "version": "1.0.1",
+  "description": "serverless plugin for deploying amazon lex bots",
+  "main": "src/index.js",
+  "types": "src/dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc ./src/index.ts",
     "test": "mocha --require ts-node/register --timeout 999999 --colors **/*.spec.ts --watch-extensions ts",
     "e2e": "mocha --require ts-node/register --timeout 999999 --colors **/*.e2e.ts --watch-extensions ts"
   },
@@ -40,5 +40,13 @@
     "typescript": "^3.2.2"
   },
   "author": "Pavel Savara",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mylesrankin/serverless-plugin-lex-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mylesrankin/serverless-plugin-lex-bot/issues"
+  },
+  "homepage": "https://github.com/mylesrankin/serverless-plugin-lex-bot#readme"
 }
