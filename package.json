@@ -1,6 +1,6 @@
 {
   "name": "@deputi/serverless-plugin-lex-bot",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "serverless plugin for deploying amazon lex bots",
   "main": "src/index.js",
   "types": "src/dist/index.d.ts",
