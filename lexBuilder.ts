@@ -305,7 +305,7 @@ export class LexBuilder {
       },
       sampleUtterances: alexaIntent.samples
         ? alexaIntent.samples.map((s) =>
-            s.replace(/{(.+)}/, "{" + longName + "_$1}")
+            s.replace(/\{(.+?)\}/g, "{" + longName + "_$1}")
           )
         : [],
 
