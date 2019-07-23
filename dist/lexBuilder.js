@@ -268,7 +268,7 @@ class LexBuilder {
                 type: "ReturnIntent"
             },
             sampleUtterances: alexaIntent.samples
-                ? alexaIntent.samples.map((s) => s.replace(/{(.+)}/, "{" + longName + "_$1}"))
+                ? alexaIntent.samples.map((s) => s.replace(/\{(.+?)\}/g, "{" + longName + "_$1}"))
                 : [],
             slots: alexaIntent.slots
                 ? alexaIntent.slots.map((s) => this.convertSlotToLex(s, longName, version))
