@@ -1,5 +1,6 @@
 export interface SlsAlexaType {
     name: string;
+    strategy: string;
     values: SlsAlexaTypeValue[];
 }
 export interface SlsAlexaTypeValue {
@@ -17,7 +18,7 @@ export interface SlsAlexaIntent {
 export interface SlsAlexaSlot {
     name: string;
     type: string;
-    "samples": string[];
+    samples: string[];
 }
 export interface SlsAlexaLanguage {
     interactionModel: {
