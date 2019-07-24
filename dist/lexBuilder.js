@@ -230,7 +230,7 @@ class LexBuilder {
                     synonyms: v.name.synonyms
                 };
             }),
-            valueSelectionStrategy: alexaType.strategy
+            valueSelectionStrategy: "TOP_RESOLUTION"
         };
     }
     convertSlotToLex(alexaSlot, longName, version) {
