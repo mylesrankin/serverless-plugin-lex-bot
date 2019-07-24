@@ -302,10 +302,7 @@ class LexBuilder {
                 name: longName,
                 version: version,
                 intents: [...intents, ...intentsBuiltIn],
-                slotTypes: alexaModel.types.map((t) => {
-                    console.log(t);
-                    return this.convertTypeToLex(t, longName, version);
-                }),
+                slotTypes: alexaModel.types.map((t) => this.convertTypeToLex(t, longName, version)),
                 childDirected: false,
                 voiceId: "0",
                 idleSessionTTLInSeconds: 300,
