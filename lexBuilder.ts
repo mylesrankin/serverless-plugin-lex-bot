@@ -245,7 +245,7 @@ export class LexBuilder {
           synonyms: v.name.synonyms
         };
       }),
-      valueSelectionStrategy: "TOP_RESOLUTION"
+      valueSelectionStrategy: "ORIGINAL_VALUE"
     };
   }
 
@@ -359,9 +359,10 @@ export class LexBuilder {
         name: longName,
         version: version,
         intents: [...intents, ...intentsBuiltIn],
-        slotTypes: alexaModel.types.map((t) =>
-          this.convertTypeToLex(t, longName, version)
-        ),
+        slotTypes: alexaModel.types.map((t) => {
+          console.log(t);
+          this.convertTypeToLex(t, longName, version);
+        }),
         childDirected: false,
         voiceId: "0",
         idleSessionTTLInSeconds: 300,
