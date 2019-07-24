@@ -240,10 +240,17 @@ export class LexBuilder {
       name: longName + "_" + alexaType.name,
       version: version,
       enumerationValues: alexaType.values.map((v) => {
-        return {
-          value: v.name.value,
-          synonyms: v.name.synonyms
-        };
+        console.log(v);
+        if (alexaType.strategy == "TOP_RESOLUTION") {
+          return {
+            value: v.name.value,
+            synonyms: v.name.synonyms
+          };
+        } else {
+          return {
+            value: v
+          };
+        }
       }),
       valueSelectionStrategy: alexaType.strategy
     };
